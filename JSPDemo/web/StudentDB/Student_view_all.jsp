@@ -4,6 +4,10 @@
     Author     : saravanan
 --%>
 
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,6 +36,44 @@
                 <tr>
                   <td height="33" align="center" valign="middle" style="color: #F70509">message</td>
                 </tr>
+                 <%!
+    
+    public static String DBDriver = "";
+	public static String DBUrl = "";
+	public static String DBUser = "";
+	public static String DBPassword = "";
+	public Connection con;
+        Statement stmt;
+        ResultSet rsData ;
+        String strQuery;
+    %>
+                
+    <%
+    try {
+			DBDriver = "com.mysql.jdbc.Driver";
+			DBUrl = "jdbc:mysql://127.0.0.1:3306/StudentDB?autoReconnect=true";
+			DBUser = "root";
+			DBPassword = "root";
+			Class.forName(DBDriver);
+                        
+                         // Estabilishing connection
+                       con = DriverManager.getConnection(DBUrl, DBUser,DBPassword);
+                       
+                       strQuery ="select * from tbl_student";
+			
+			 stmt = con.createStatement();
+				
+				rsData=stmt.executeQuery(strQuery);
+					
+		} 
+		catch (Exception er) {
+			System.out.println("ERROR [Driver loading Error] : " + er);
+		}
+        
+                   
+              %>
+
+
                 <tr>
                   <td height="33" align="center" valign="middle">
 					  <form id="form1" name="form1" method="post">
@@ -46,52 +88,38 @@
 					          <td width="20%" align="center" valign="middle" bgcolor="#E7BF09"><span style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">Total</span></td>
 					          <td width="18%" align="center" valign="middle" bgcolor="#E7BF09"><span style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">Result</span></td>
 					          </tr>
+                                                  
+                                                   <% 
+                                            try
+                                            {
+                                                    if(rsData!=null)
+                                                    {
+                                                            while(rsData.next())
+                                                            {
+
+                                                                    %>
+                                                  
 					        <tr>
-					          <td height="30">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle">&nbsp;</td>
-					          <td>&nbsp;</td>
+                                                    <td height="30"><%= rsData.getString("StudentID") %></td>
+					          <td><%= rsData.getString("StudentName") %></td>
+					          
+					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif"><%= rsData.getString("Mark1") %></td>
+					          <td><%= rsData.getString("Mark2") %></td>
+					          <td align="left" valign="middle"><%= rsData.getString("Mark3") %></td>
+					          <td><%= rsData.getString("Total") %></td>
+                                                  <td><%= rsData.getString("Result") %></td>
 					          </tr>
-					        <tr>
-					          <td height="30">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle"><input type="text" name="txtMark1" id="txtMark1"></td>
-					          <td>&nbsp;</td>
-					          </tr>
-					        <tr>
-					          <td height="30">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          </tr>
-					        <tr>
-					          <td height="30">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle"><input type="text" name="txtMark3" id="txtMark3"></td>
-					          <td>&nbsp;</td>
-					          </tr>
-					        <tr>
-					          <td height="30">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle" style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          <td align="left" valign="middle">&nbsp;</td>
-					          <td>&nbsp;</td>
-					          </tr>
-					        </tbody>
+                                                  
+                                                  <%
+                                                  }
+                                                }
+                                                }
+                                                catch(Exception ee)
+                                                {
+out.print(ee.getMessage());
+}
+                                                  %>
+                                                </tbody>
 					      </table>
 						  
 						  
