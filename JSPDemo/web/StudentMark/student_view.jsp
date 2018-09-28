@@ -4,6 +4,9 @@
     Author     : saravanan
 --%>
 
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +18,18 @@
       <%!
           int Student_ID,Mark1,Mark2,Mark3,Total;
           String Name,Result;
+        public static String DBDriver = "";
+	public static String DBUrl = "";
+	public static String DBUser = "";
+	public static String DBPassword = "";
+
+	public Connection con;
+        Statement stmt;
+           int QueryResult=0;
+String Query,Message;
+
+
+
           %>
           <%
           Student_ID = Integer.parseInt(request.getParameter("txtStudentID"));
@@ -35,8 +50,58 @@
            {
                Result="Pass";
            }
+           
+           
+           Query = "insert into tbl_student_mark values(";
+        Query =Query + Student_ID + ",";
+        Query =Query + "'" + Name + "',";
+        Query =Query +  Mark1 + ",";
+        Query =Query +  Mark2 + ",";
+        Query =Query +  Mark3 + ",";
+        Query =Query +  Total + ",";
+        Query =Query + "'" + Result + "')";
+        
+        out.println(Query);
           
-          
+          try {
+			DBDriver = "com.mysql.jdbc.Driver";
+			DBUrl = "jdbc:mysql://127.0.0.1:3306/student_mark?autoReconnect=true";
+			DBUser = "root";
+			DBPassword = "root";
+                        
+			Class.forName(DBDriver); //Mysql driver initialalization
+                        con = DriverManager.getConnection(DBUrl, DBUser,DBPassword);
+                        stmt = con.createStatement();
+                      
+		QueryResult = stmt.executeUpdate(Query);
+                con.close();
+                stmt.close();
+                        
+                        
+                     if(QueryResult >0)  
+                     {
+                     Message ="Student details successfully inserted !";
+                     }
+                     else
+                     {
+                      Message ="Please try again later";
+                     }
+                        
+                        
+                        
+                        
+					
+		} 
+		catch (Exception er) {
+			//System.out.println("ERROR [Driver loading Error] : " + er);
+                        
+                         Message =er.getMessage();
+		}
+
+
+
+
+
           %>
 <table width="100%" border="0">
   <tbody>
@@ -56,7 +121,7 @@
                   <td align="center" valign="middle" style="font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: large; font-style: italic;">Student Mark Details</td>
                 </tr>
                 <tr>
-                  <td align="center" valign="middle" style="font-size: medium; color: #F10004;">&nbsp;</td>
+                  <td align="center" valign="middle" style="font-size: medium; color: #F10004;"><%= Message %> </td>
                 </tr>
                 <tr>
                   <td align="center" valign="top">
