@@ -52,11 +52,11 @@ String Query,Message;
            
            
            Query = "update tbl_student_mark set ";
-       // Query =Query + "name = '" + Name + "' and ";
-        Query =Query + "mark1 = " +  Mark1 + " and ";
-        Query =Query + "mark2 = " +  Mark2 + " and ";
-       Query =Query + "mark3 = " +  Mark3 + " and ";
-      Query =Query + "total = " +  Total + " and ";
+       Query =Query + "name = '" + Name + "' ,";
+        Query =Query + "mark1 = " +  Mark1 + " , ";
+        Query =Query + "mark2 = " +  Mark2 + " , ";
+       Query =Query + "mark3 = " +  Mark3 + " , ";
+      Query =Query + "total = " +  Total + " , ";
       Query =Query + "result = '" + Result + "'  where student_id="+Student_ID;
        
         out.println(Query);

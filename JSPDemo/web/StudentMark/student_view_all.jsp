@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="..\css\style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
@@ -73,7 +74,15 @@ String Query,Message;
             <td height="419" align="center" valign="top"><table width="100%" border="0">
               <tbody>
                 <tr>
-                  <td align="center" valign="middle">Menu</td>
+                    <td align="center" valign="middle">
+                        <ul>
+  <li><a class="active" href="student_view_all.jsp">Home</a></li>
+  <li><a href="student_edit_list.jsp">EDIT</a></li>
+  <li><a href="student_list.jsp">Delete</a></li>
+  <li><a  href="student_insert.jsp">New</a></li>
+</ul>
+                        
+                    </td>
                 </tr>
                 <tr>
                   <td align="center" valign="middle" style="font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, sans-serif; font-size: large; font-style: italic;">Student Mark Details</td>
