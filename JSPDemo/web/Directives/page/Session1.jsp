@@ -16,7 +16,8 @@
         
         <% 
         session.setAttribute("Course", "Java-JsP");
-        
+        out.println("Session created successfully!");
         %>
+        
     </body>
 </html>
